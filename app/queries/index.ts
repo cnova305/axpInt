@@ -36,3 +36,38 @@ export async function getSchools() {
     console.error(error)
   }
 }
+
+async function insertSchool() {
+  const schoolData = {
+    name: "Example Organization",
+    emailDomain: "example.org",
+    juniorSchool: true,
+    seniorSchool: false,
+  }
+  const insertQuery = `
+    INSERT School {
+        name := <str>$name,
+        emailDomain :=<str>$emailDomain,
+        juniorSchool := <bool>$juniorSchool,
+        seniorSchool := <bool>$seniorSchool,
+    };
+    `
+
+  const data = await client.execute(insertQuery, {
+    name: schoolData.name,
+    emailDomain: schoolData.emailDomain,
+    juniorSchool: schoolData.juniorSchool,
+    seniorSchool: schoolData.seniorSchool,
+  })
+
+  return data
+}
+
+export async function postSchool() {
+  try {
+    const data = await insertSchool()
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
