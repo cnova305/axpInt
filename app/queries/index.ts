@@ -37,13 +37,27 @@ export async function getSchools() {
   }
 }
 
-async function insertSchool() {
-  const schoolData = {
-    name: "Example Organization",
-    emailDomain: "example.org",
-    juniorSchool: true,
-    seniorSchool: false,
-  }
+interface SchoolData {
+  name: string
+  emailDomain?: string
+  juniorSchool?: string
+  seniorSchool?: string
+}
+
+async function insertSchool(schoolData: SchoolData) {
+  // const schoolData = {
+  //   name: "Example Organization",
+  //   emailDomain: "example.org",
+  //   juniorSchool: true,
+  //   seniorSchool: false,
+  //   nameOrNumber: "123",
+  //   street: "Example Street",
+  //   street2: "Example Street 2",
+  //   townOrCity: "Example Town",
+  //   region: "Example Region",
+  //   country: "Example Country",
+  //   addressCode: "12345",
+  // }
   const insertQuery = `
     INSERT School {
         name := <str>$name,
@@ -55,18 +69,18 @@ async function insertSchool() {
 
   const data = await client.execute(insertQuery, {
     name: schoolData.name,
-    emailDomain: schoolData.emailDomain,
-    juniorSchool: schoolData.juniorSchool,
-    seniorSchool: schoolData.seniorSchool,
+    emailDomain: schoolData?.emailDomain || "",
+    juniorSchool: schoolData?.juniorSchool ? true : false,
+    seniorSchool: schoolData?.seniorSchool ? true : false,
   })
 
   return data
 }
 
-export async function postSchool() {
+export async function postSchool(schoolData: SchoolData) {
   try {
-    const data = await insertSchool()
-    return data
+    const data = await insertSchool(schoolData)
+    return
   } catch (error) {
     console.error(error)
   }
