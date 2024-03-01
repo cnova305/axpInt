@@ -42,36 +42,48 @@ interface SchoolData {
   emailDomain?: string
   juniorSchool?: string
   seniorSchool?: string
+  nameOrNumber: string
+  street?: string
+  street2?: string
+  townOrCity: string
+  region?: string
+  addressCode: string
+  country: string
 }
 
 async function insertSchool(schoolData: SchoolData) {
-  // const schoolData = {
-  //   name: "Example Organization",
-  //   emailDomain: "example.org",
-  //   juniorSchool: true,
-  //   seniorSchool: false,
-  //   nameOrNumber: "123",
-  //   street: "Example Street",
-  //   street2: "Example Street 2",
-  //   townOrCity: "Example Town",
-  //   region: "Example Region",
-  //   country: "Example Country",
-  //   addressCode: "12345",
-  // }
   const insertQuery = `
-    INSERT School {
+  INSERT Address {
+    nameOrNumber := <str>$nameOrNumber,
+    street := <str>$street,
+    street2 := <str>$street2,
+    townOrCity := <str>$townOrCity,
+    region := <str>$region,
+    addressCode := <str>$addressCode,
+    country := <str>$country,
+    organisation := (
+      INSERT School {
         name := <str>$name,
-        emailDomain :=<str>$emailDomain,
+        emailDomain := <str>$emailDomain,
         juniorSchool := <bool>$juniorSchool,
         seniorSchool := <bool>$seniorSchool,
-    };
-    `
+      }
+    )
+  };
+  `
 
   const data = await client.execute(insertQuery, {
     name: schoolData.name,
     emailDomain: schoolData?.emailDomain || "",
     juniorSchool: schoolData?.juniorSchool ? true : false,
     seniorSchool: schoolData?.seniorSchool ? true : false,
+    nameOrNumber: schoolData?.nameOrNumber || "",
+    street: schoolData?.street || "",
+    street2: schoolData?.street2 || "",
+    townOrCity: schoolData?.townOrCity || "",
+    region: schoolData?.region || "",
+    addressCode: schoolData?.addressCode || "",
+    country: schoolData?.country || "",
   })
 
   return data
