@@ -51,6 +51,41 @@ export default function Index() {
                 Senior School: <input type="checkbox" name="seniorSchool" />
               </label>
             </p>
+            <p>
+              <label>
+                Name or Number: <input type="text" name="nameOrNumber" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Street: <input type="text" name="street" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Street 2: <input type="text" name="street2" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Town or City: <input type="text" name="townOrCity" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Region: <input type="text" name="region" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Address Code: <input type="text" name="addressCode" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Country: <input type="text" name="country" />
+              </label>
+            </p>
 
             <p>
               <button type="submit">Create</button>
